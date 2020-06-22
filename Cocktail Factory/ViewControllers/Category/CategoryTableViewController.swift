@@ -59,6 +59,15 @@ class CategoryTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let drinkCollectionVC = DrinkCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout.init())
+        guard let drink = dataSource.itemIdentifier(for: indexPath) else {
+          return
+        }
+        guard let categoryType = drink.strCategory else {
+          return
+        }
+        drinkCollectionVC.categoryType = categoryType
+        self.navigationController?.pushViewController(drinkCollectionVC, animated: true)
     }
     
 }

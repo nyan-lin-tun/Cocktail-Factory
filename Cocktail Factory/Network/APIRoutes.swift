@@ -13,11 +13,14 @@ class APIRoutes {
     enum Endpoints {
         
         case category
+        case categoryFilter(String)
     
         var stringValue: String {
         switch self {
             case .category:
                 return baseUrl() + "list.php?c=list"
+            case .categoryFilter(let category):
+                return baseUrl() + "filter.php?c=\(category.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
             }
         }
     

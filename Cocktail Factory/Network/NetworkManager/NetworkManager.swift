@@ -29,5 +29,16 @@ class NetworkManager {
         }
     }
     
+    func getCategoryByFilter(categoryName: String,
+                             result: @escaping (CategoryFilterResponse?, Error?) -> Void) {
+        GenericNetwork.shared().getRequest(apiRoute: APIRoutes.Endpoints.categoryFilter(categoryName).url, parameter: nil, responseType: CategoryFilterResponse.self, success: { (categoryFilterResponse) in
+            result(categoryFilterResponse, nil)
+        }) { (error) in
+            result(nil, error)
+        }
+    }
+    
+    
+    
     
 }

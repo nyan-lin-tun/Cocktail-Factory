@@ -80,4 +80,22 @@ class GenericNetwork {
         task.resume()
     }
     
+    func getPhotoData(imageUrl: String,
+                            completion: @escaping (Data?, Error?) -> Void) {
+        let url = URL(string: imageUrl)!
+        let urlRequest = URLRequest(url: url)
+        let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            guard let data = data else {
+                DispatchQueue.main.async {
+                    completion(nil, error)
+                }
+                return
+            }
+            DispatchQueue.main.async {
+                completion(data, nil)
+            }
+        }
+        task.resume()
+    }
+    
 }
