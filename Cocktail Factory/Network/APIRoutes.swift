@@ -14,13 +14,21 @@ class APIRoutes {
         
         case category
         case categoryFilter(String)
+        
+        case glass
+        case glassFilter(String)
     
         var stringValue: String {
-        switch self {
+            switch self {
             case .category:
                 return baseUrl() + "list.php?c=list"
             case .categoryFilter(let category):
                 return baseUrl() + "filter.php?c=\(category.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
+            
+            case .glass:
+                return baseUrl() + "list.php?g=list"
+            case .glassFilter(let glass):
+                return baseUrl() + "filter.php?g=\(glass.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
             }
         }
     

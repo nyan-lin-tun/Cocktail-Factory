@@ -38,6 +38,22 @@ class NetworkManager {
         }
     }
     
+    func getGlass(result: @escaping (GlassResponse?, Error?) -> Void) {
+        GenericNetwork.shared().getRequest(apiRoute: APIRoutes.Endpoints.glass.url, parameter: nil, responseType: GlassResponse.self, success: { (glassREsponse) in
+            result(glassREsponse, nil)
+        }) { (error) in
+            result(nil, error)
+        }
+    }
+
+    func getGlassByFilter(glassName: String,
+                          result: @escaping (CategoryFilterResponse?, Error?) -> Void) {
+        GenericNetwork.shared().getRequest(apiRoute: APIRoutes.Endpoints.glassFilter(glassName).url, parameter: nil, responseType: CategoryFilterResponse.self, success: { (glassFilterResponse) in
+            result(glassFilterResponse, nil)
+        }) { (error) in
+            result(nil, error)
+        }
+    }
     
     
     
