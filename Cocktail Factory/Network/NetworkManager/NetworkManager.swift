@@ -55,6 +55,13 @@ class NetworkManager {
         }
     }
     
-    
+    func getIngredient(idDrink: String,
+                       result: @escaping (RandomCocktailResponse?, Error?) -> Void) {
+        GenericNetwork.shared().getRequest(apiRoute: APIRoutes.Endpoints.ingredients(idDrink).url, parameter: nil, responseType: RandomCocktailResponse.self, success: { (igredientResponse) in
+            result(igredientResponse, nil)
+        }) { (error) in
+            result(nil, error)
+        }
+    }
     
 }

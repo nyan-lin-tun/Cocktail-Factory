@@ -63,7 +63,7 @@ class GlassCollectionViewController: UICollectionViewController, UICollectionVie
         dataSource = UICollectionViewDiffableDataSource(collectionView: self.collectionView, cellProvider: { (collectionView, indexPath, drink) -> UICollectionViewCell? in
             let drinkCell = collectionView.dequeueReusableCell(withReuseIdentifier: "drinkCell", for: indexPath) as! DrinkCollectionViewCell
             drinkCell.drinkTitle.text = drink.strDrink
-            drinkCell.drinkImageView.image = UIImage(named: "")
+            drinkCell.drinkImageView.image = UIImage(named: "glass")
             if let imageUrl = drink.strDrinkThumb {
                 GenericNetwork.shared().getPhotoData(imageUrl: imageUrl) { (data, error) in
                     guard let data = data else {
