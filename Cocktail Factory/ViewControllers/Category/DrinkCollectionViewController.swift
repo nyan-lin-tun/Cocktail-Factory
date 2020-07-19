@@ -46,16 +46,21 @@ class DrinkCollectionViewController: UICollectionViewController, UICollectionVie
 
     func getCategoryDrinks() {
         if LocalReachability.isConnectedToNetwork() {
-            NetworkManager.shared().getCategoryByFilter(categoryName: self.categoryType) { (categroyFilterResponse, error) in
-                if error == nil {
-                    self.setCategoryFilterData(with: categroyFilterResponse?.drinks ?? [])
-                }else {
-                    //Display Error
-                    print(error?.localizedDescription)
-                }
-            }
+            self.displayLoading(onView: self.view)
+            NetworkManager.shared().getCategoryByFilter(categoryName: self.categoryType,
+                                                        result: self.handleCategoryDrinksResponse(response:error:))
         }else {
             
+        }
+    }
+    
+    private func handleCategoryDrinksResponse(response: CategoryFilterResponse?, error: Error?) {
+        self.hideLoading()
+        if error == nil {
+            self.setCategoryFilterData(with: response?.drinks ?? [])
+        }else {
+            //Display Error
+            print(error?.localizedDescription)
         }
     }
     

@@ -30,14 +30,18 @@ class GlassTableViewController: UITableViewController {
     
     func getGlassData() {
         if LocalReachability.isConnectedToNetwork() {
-            NetworkManager.shared().getGlass { (glassResponse, error) in
-                if error == nil {
-                    self.setGlassData(with: glassResponse?.drinks ?? [])
-                }else {
-                    //Display Error
-                    print(error?.localizedDescription)
-                }
-            }
+            self.displayLoading(onView: self.view)
+            NetworkManager.shared().getGlass(result: self.handleGlassResponse(response:error:))
+        }
+    }
+    
+    private func handleGlassResponse(response: GlassResponse?, error: Error?) {
+        self.hideLoading()
+        if error == nil {
+            self.setGlassData(with: response?.drinks ?? [])
+        }else {
+            //Display Error
+            print(error?.localizedDescription)
         }
     }
     

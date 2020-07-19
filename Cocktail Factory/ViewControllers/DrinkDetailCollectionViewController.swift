@@ -30,6 +30,7 @@ class DrinkDetailCollectionViewController: UICollectionViewController {
 
     private func getDrinkDetail() {
         if LocalReachability.isConnectedToNetwork() {
+            self.displayLoading(onView: self.view)
             NetworkManager.shared().getIngredient(idDrink: self.idDrink,
                                                   result: self.drinkDetailResponseHandler(drinkResponse:error:))
         }else {
@@ -39,6 +40,7 @@ class DrinkDetailCollectionViewController: UICollectionViewController {
     
     
     private func drinkDetailResponseHandler(drinkResponse: RandomCocktailResponse?, error: Error?) {
+        self.hideLoading()
         if error == nil {
             self.drink = drinkResponse?.drinks?[0]
             self.collectionView.reloadData()

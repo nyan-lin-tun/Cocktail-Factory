@@ -27,6 +27,7 @@ class HomeCollectionViewController: UICollectionViewController {
     
     private func getRandomCocktail() {
         if LocalReachability.isConnectedToNetwork() {
+            self.displayLoading(onView: self.view)
             NetworkManager.shared().getRandomCocktail(result: self.randomCocktailResponseHandler(drinkResponse:error:))
         }else {
             
@@ -35,6 +36,7 @@ class HomeCollectionViewController: UICollectionViewController {
     
     
     private func randomCocktailResponseHandler(drinkResponse: RandomCocktailResponse?, error: Error?) {
+        self.hideLoading()
         if error == nil {
             self.cocktail = drinkResponse?.drinks?[0]
             self.collectionView.reloadData()

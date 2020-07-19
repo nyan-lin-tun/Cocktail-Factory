@@ -46,16 +46,21 @@ class GlassCollectionViewController: UICollectionViewController, UICollectionVie
 
     func getGlassDrinks() {
         if LocalReachability.isConnectedToNetwork() {
-            NetworkManager.shared().getGlassByFilter(glassName: self.glassName) { (categroyFilterResponse, error) in
-                if error == nil {
-                    self.setGlassFilterData(with: categroyFilterResponse?.drinks ?? [])
-                }else {
-                    //Display Error
-                    print(error?.localizedDescription)
-                }
-            }
+            self.displayLoading(onView: self.view)
+            NetworkManager.shared().getGlassByFilter(glassName: self.glassName,
+                                                     result: self.handleGlassDrinksResponse(response:error:))
         }else {
             
+        }
+    }
+    
+    private func handleGlassDrinksResponse(response: CategoryFilterResponse?, error: Error?) {
+        self.hideLoading()
+        if error == nil {
+            self.setGlassFilterData(with: response?.drinks ?? [])
+        }else {
+            //Display Error
+            print(error?.localizedDescription)
         }
     }
     

@@ -44,6 +44,7 @@ class AlcoholTypeCollectionViewController: UICollectionViewController, UICollect
     
     func getAlcolholByType() {
         if LocalReachability.isConnectedToNetwork() {
+            self.displayLoading(onView: self.view)
             NetworkManager.shared().filterAlcoholByType(type: self.alcoholType,
                                                         result: self.handleFilterAlcoholResponse(response:error:))
         }else {
@@ -52,9 +53,8 @@ class AlcoholTypeCollectionViewController: UICollectionViewController, UICollect
     }
     
     private func handleFilterAlcoholResponse(response: CategoryFilterResponse?, error: Error?) {
+        self.hideLoading()
         if error == nil {
-            print("-----------------")
-            print(response?.drinks?.count)
             self.setFilterByAlcoholData(with: response?.drinks ?? [])
         }else {
             

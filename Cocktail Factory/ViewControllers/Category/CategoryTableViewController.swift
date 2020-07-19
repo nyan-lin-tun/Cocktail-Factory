@@ -30,14 +30,20 @@ class CategoryTableViewController: UITableViewController {
     
     func getCategoryData() {
         if LocalReachability.isConnectedToNetwork() {
-            NetworkManager.shared().getCategory { (categoryResponse, error) in
-                if error == nil {
-                    self.setCategoryData(with: categoryResponse?.drinks ?? [])
-                }else {
-                    //Display Error
-                    print(error?.localizedDescription)
-                }
-            }
+            self.displayLoading(onView: self.view)
+            NetworkManager.shared().getCategory(result: self.handleCategoryResponse(response:error:))
+        }else {
+            
+        }
+    }
+    
+    private func handleCategoryResponse(response: CategoryResponse?, error: Error?) {
+        self.hideLoading()
+        if error == nil {
+            self.setCategoryData(with: response?.drinks ?? [])
+        }else {
+            //Display Error
+            print(error?.localizedDescription)
         }
     }
     
