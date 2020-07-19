@@ -91,4 +91,10 @@ class AlcoholTypeCollectionViewController: UICollectionViewController, UICollect
         return CGSize(width: self.collectionView.frame.width - 20, height: 100)
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let drinkDetailViewController = DrinkDetailCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout.init())
+        let navigationController = UINavigationController(rootViewController: drinkDetailViewController)
+        drinkDetailViewController.idDrink = dataSource.itemIdentifier(for: indexPath)?.idDrink ?? ""
+        self.present(navigationController, animated: true, completion: nil)
+    }
 }

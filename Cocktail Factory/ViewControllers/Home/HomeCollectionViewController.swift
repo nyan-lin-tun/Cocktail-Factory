@@ -20,6 +20,7 @@ class HomeCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Home"
         registerCells()
         self.getRandomCocktail()
         

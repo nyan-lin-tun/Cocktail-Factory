@@ -33,4 +33,8 @@ extension UIViewController {
             loadingView = nil
         }
     }
+    
+    func displayAlert(title: String, message: String) {
+        
+    }
 }
