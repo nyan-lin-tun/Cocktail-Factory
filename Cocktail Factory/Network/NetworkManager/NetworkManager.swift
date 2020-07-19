@@ -21,6 +21,14 @@ class NetworkManager {
         return networkManger!
     }
     
+    func getRandomCocktail(result: @escaping (RandomCocktailResponse?, Error?) -> Void) {
+        GenericNetwork.shared().getRequest(apiRoute: APIRoutes.Endpoints.random.url, parameter: nil, responseType: RandomCocktailResponse.self, success: { (igredientResponse) in
+            result(igredientResponse, nil)
+        }) { (error) in
+            result(nil, error)
+        }
+    }
+    
     func getCategory(result: @escaping (CategoryResponse?, Error?) -> Void) {
         GenericNetwork.shared().getRequest(apiRoute: APIRoutes.Endpoints.category.url, parameter: nil, responseType: CategoryResponse.self, success: { (categoryResponse) in
             result(categoryResponse, nil)

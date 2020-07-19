@@ -12,6 +12,8 @@ class APIRoutes {
     
     enum Endpoints {
         
+        case random
+        
         case category
         case categoryFilter(String)
         
@@ -21,6 +23,9 @@ class APIRoutes {
     
         var stringValue: String {
             switch self {
+            
+            case .random:
+                return baseUrl() + "random.php"
             case .category:
                 return baseUrl() + "list.php?c=list"
             case .categoryFilter(let category):

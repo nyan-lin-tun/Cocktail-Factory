@@ -87,6 +87,14 @@ class DrinkCollectionViewController: UICollectionViewController, UICollectionVie
         snapshot.appendItems(categoryFilterDrink, toSection: .main)
         dataSource.apply(snapshot, animatingDifferences: true)
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let drinkDetailViewController = DrinkDetailCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout.init())
+        let navigationController = UINavigationController(rootViewController: drinkDetailViewController)
+        drinkDetailViewController.idDrink = dataSource.itemIdentifier(for: indexPath)?.idDrink ?? ""
+        self.present(navigationController, animated: true, completion: nil)
+        
+    }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: self.collectionView.frame.width - 20, height: 100)
