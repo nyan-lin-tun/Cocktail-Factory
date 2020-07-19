@@ -96,6 +96,10 @@ class HomeCollectionViewController: UICollectionViewController {
             drinkDetailViewController.idDrink = self.cocktail?.idDrink ?? ""
             self.present(navigationController, animated: true, completion: nil)
         }else if indexPath.section == 2 {
+            let alcoholListViewController = AlcoholTypeCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout.init())
+            let drinkType = ["Alcoholic", "Non_alcoholic", "Optional_alcohol" ]
+            alcoholListViewController.alcoholType = drinkType[indexPath.row]
+            self.navigationController?.pushViewController(alcoholListViewController, animated: true)
             
         }
     }
@@ -107,7 +111,7 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.section == 0 {
-            return CGSize(width: collectionView.frame.width - 20, height: 225)
+            return CGSize(width: collectionView.frame.width - 20, height: 240)
         }else{
             return CGSize(width: collectionView.frame.width - 20, height: 50)
         }

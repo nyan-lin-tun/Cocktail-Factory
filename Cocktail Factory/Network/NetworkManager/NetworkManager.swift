@@ -29,6 +29,15 @@ class NetworkManager {
         }
     }
     
+    func filterAlcoholByType(type: String,
+                             result: @escaping (CategoryFilterResponse?, Error?) -> Void) {
+        GenericNetwork.shared().getRequest(apiRoute: APIRoutes.Endpoints.filterByAlcohol(type).url, parameter: nil, responseType: CategoryFilterResponse.self, success: { (filterAlcoholResponse) in
+            result(filterAlcoholResponse, nil)
+        }) { (error) in
+            result(nil, error)
+        }
+    }
+    
     func getCategory(result: @escaping (CategoryResponse?, Error?) -> Void) {
         GenericNetwork.shared().getRequest(apiRoute: APIRoutes.Endpoints.category.url, parameter: nil, responseType: CategoryResponse.self, success: { (categoryResponse) in
             result(categoryResponse, nil)

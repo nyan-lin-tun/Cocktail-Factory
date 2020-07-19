@@ -20,6 +20,8 @@ class APIRoutes {
         case glass
         case glassFilter(String)
         case ingredients(String)
+        
+        case filterByAlcohol(String)
     
         var stringValue: String {
             switch self {
@@ -37,6 +39,9 @@ class APIRoutes {
                 return baseUrl() + "filter.php?g=\(glass.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
             case .ingredients(let idDrink):
                 return baseUrl() + "lookup.php?i=\(idDrink)"
+                
+            case .filterByAlcohol(let type):
+                return baseUrl() + "filter.php?a=\(type.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
             }
         }
     

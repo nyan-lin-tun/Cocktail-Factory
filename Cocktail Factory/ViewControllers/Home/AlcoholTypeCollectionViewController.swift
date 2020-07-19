@@ -1,17 +1,19 @@
 //
-//  CategoryCollectionViewController.swift
+//  AlcoholTypeCollectionViewController.swift
 //  Cocktail Factory
 //
-//  Created by Nyan Lin Tun on 22/06/2020.
+//  Created by Nyan Lin Tun on 19/07/2020.
 //  Copyright © 2020 Nyan Lin Tun. All rights reserved.
 //
 
 import UIKit
 
-class DrinkCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+
+class AlcoholTypeCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+
     
-    var categoryType: String = ""
-    
+    var alcoholType: String = ""
+      
     enum Section {
         case main
     }
@@ -27,33 +29,33 @@ class DrinkCollectionViewController: UICollectionViewController, UICollectionVie
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
+    
     override func viewDidLoad() {
-
         super.viewDidLoad()
         self.collectionView.backgroundColor = .white
-        self.title = categoryType
+        self.title = alcoholType
         self.collectionView.register(cellType: DrinkCollectionViewCell.self)
-        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-            flowLayout.minimumInteritemSpacing = 10
-            flowLayout.minimumLineSpacing = 10
-        }
         self.setUpDataSource()
-        self.getCategoryDrinks()
+        self.getAlcolholByType()
+        
     }
 
-
-    func getCategoryDrinks() {
+    
+    func getAlcolholByType() {
         if LocalReachability.isConnectedToNetwork() {
-            NetworkManager.shared().getCategoryByFilter(categoryName: self.categoryType) { (categroyFilterResponse, error) in
-                if error == nil {
-                    self.setCategoryFilterData(with: categroyFilterResponse?.drinks ?? [])
-                }else {
-                    //Display Error
-                    print(error?.localizedDescription)
-                }
-            }
+            NetworkManager.shared().filterAlcoholByType(type: self.alcoholType,
+                                                        result: self.handleFilterAlcoholResponse(response:error:))
+        }else {
+            
+        }
+    }
+    
+    private func handleFilterAlcoholResponse(response: CategoryFilterResponse?, error: Error?) {
+        if error == nil {
+            print("-----------------")
+            print(response?.drinks?.count)
+            self.setFilterByAlcoholData(with: response?.drinks ?? [])
         }else {
             
         }
@@ -78,23 +80,15 @@ class DrinkCollectionViewController: UICollectionViewController, UICollectionVie
         })
     }
     
-    private func setCategoryFilterData(with categoryFilterDrink: [CategoryFilterDrink]) {
+    private func setFilterByAlcoholData(with categoryFilterDrink: [CategoryFilterDrink]) {
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
         snapshot.appendItems(categoryFilterDrink, toSection: .main)
         dataSource.apply(snapshot, animatingDifferences: true)
     }
-    
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let drinkDetailViewController = DrinkDetailCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout.init())
-        let navigationController = UINavigationController(rootViewController: drinkDetailViewController)
-        drinkDetailViewController.idDrink = dataSource.itemIdentifier(for: indexPath)?.idDrink ?? ""
-        self.present(navigationController, animated: true, completion: nil)
-        
-    }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: self.collectionView.frame.width - 20, height: 100)
     }
-
+    
 }

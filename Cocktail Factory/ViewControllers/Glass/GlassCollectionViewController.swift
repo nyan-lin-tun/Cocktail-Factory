@@ -32,7 +32,7 @@ class GlassCollectionViewController: UICollectionViewController, UICollectionVie
         super.viewDidLoad()
         self.collectionView.backgroundColor = .white
         self.title = glassName
-        self.collectionView.register(UINib(nibName: "DrinkCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "drinkCell")
+        self.collectionView.register(cellType: DrinkCollectionViewCell.self)
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
             flowLayout.minimumInteritemSpacing = 10
@@ -61,7 +61,7 @@ class GlassCollectionViewController: UICollectionViewController, UICollectionVie
     
     private func setUpDataSource() {
         dataSource = UICollectionViewDiffableDataSource(collectionView: self.collectionView, cellProvider: { (collectionView, indexPath, drink) -> UICollectionViewCell? in
-            let drinkCell = collectionView.dequeueReusableCell(withReuseIdentifier: "drinkCell", for: indexPath) as! DrinkCollectionViewCell
+            let drinkCell = collectionView.dequeueReusableCell(with: DrinkCollectionViewCell.self, for: indexPath)
             drinkCell.drinkTitle.text = drink.strDrink
             drinkCell.drinkImageView.image = UIImage(named: "glass")
             if let imageUrl = drink.strDrinkThumb {
