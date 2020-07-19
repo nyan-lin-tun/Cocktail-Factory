@@ -24,6 +24,9 @@
 		46B28B2324C463860087F03D /* DrinkHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B28B2124C463860087F03D /* DrinkHeaderCollectionViewCell.swift */; };
 		46B28B2424C463860087F03D /* DrinkHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46B28B2224C463860087F03D /* DrinkHeaderCollectionViewCell.xib */; };
 		46B28B2724C46FD20087F03D /* CellRegistrations+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B28B2624C46FD20087F03D /* CellRegistrations+Extensions.swift */; };
+		46B28B2A24C47D290087F03D /* HomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B28B2924C47D290087F03D /* HomeCollectionViewController.swift */; };
+		46B28B2F24C47D590087F03D /* HomeHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B28B2D24C47D590087F03D /* HomeHeaderCollectionViewCell.swift */; };
+		46B28B3024C47D590087F03D /* HomeHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46B28B2E24C47D590087F03D /* HomeHeaderCollectionViewCell.xib */; };
 		46E262AB249FA596005F70A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E262AA249FA596005F70A4 /* AppDelegate.swift */; };
 		46E262AD249FA596005F70A4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E262AC249FA596005F70A4 /* SceneDelegate.swift */; };
 		46E262B2249FA596005F70A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46E262B0249FA596005F70A4 /* Main.storyboard */; };
@@ -56,6 +59,9 @@
 		46B28B2124C463860087F03D /* DrinkHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		46B28B2224C463860087F03D /* DrinkHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DrinkHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
 		46B28B2624C46FD20087F03D /* CellRegistrations+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CellRegistrations+Extensions.swift"; sourceTree = "<group>"; };
+		46B28B2924C47D290087F03D /* HomeCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewController.swift; sourceTree = "<group>"; };
+		46B28B2D24C47D590087F03D /* HomeHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
+		46B28B2E24C47D590087F03D /* HomeHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
 		46E262A7249FA596005F70A4 /* Cocktail Factory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cocktail Factory.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		46E262AA249FA596005F70A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		46E262AC249FA596005F70A4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -103,9 +109,9 @@
 		4685212924A086F1006B9656 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				46B28B2C24C47D460087F03D /* Home */,
+				46B28B2B24C47D3E0087F03D /* Drink */,
 				46B28B2024C463190087F03D /* Detail */,
-				4685212A24A08746006B9656 /* DrinkCollectionViewCell.swift */,
-				4685212B24A08746006B9656 /* DrinkCollectionViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -161,6 +167,32 @@
 				46B28B2624C46FD20087F03D /* CellRegistrations+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		46B28B2824C47D1A0087F03D /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				46B28B2924C47D290087F03D /* HomeCollectionViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		46B28B2B24C47D3E0087F03D /* Drink */ = {
+			isa = PBXGroup;
+			children = (
+				4685212A24A08746006B9656 /* DrinkCollectionViewCell.swift */,
+				4685212B24A08746006B9656 /* DrinkCollectionViewCell.xib */,
+			);
+			path = Drink;
+			sourceTree = "<group>";
+		};
+		46B28B2C24C47D460087F03D /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				46B28B2D24C47D590087F03D /* HomeHeaderCollectionViewCell.swift */,
+				46B28B2E24C47D590087F03D /* HomeHeaderCollectionViewCell.xib */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 		46E2629E249FA596005F70A4 = {
@@ -220,6 +252,7 @@
 		46E262C0249FBEBF005F70A4 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				46B28B2824C47D1A0087F03D /* Home */,
 				4685213324A0AF72006B9656 /* Glass */,
 				4685212624A0853D006B9656 /* Category */,
 				46B28B1E24C393AE0087F03D /* DrinkDetailCollectionViewController.swift */,
@@ -330,6 +363,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46B28B3024C47D590087F03D /* HomeHeaderCollectionViewCell.xib in Resources */,
 				46E262B7249FA598005F70A4 /* LaunchScreen.storyboard in Resources */,
 				46E262B4249FA598005F70A4 /* Assets.xcassets in Resources */,
 				46E262B2249FA596005F70A4 /* Main.storyboard in Resources */,
@@ -348,6 +382,7 @@
 				46E262D0249FD7DB005F70A4 /* NetworkManager.swift in Sources */,
 				4685214124A0BEB4006B9656 /* RandomCocktailResponse.swift in Sources */,
 				4685213624A0AF8A006B9656 /* GlassResponse.swift in Sources */,
+				46B28B2A24C47D290087F03D /* HomeCollectionViewController.swift in Sources */,
 				4685213A24A0B130006B9656 /* GlassTableViewController.swift in Sources */,
 				4685212224A07A79006B9656 /* APIRoutes.swift in Sources */,
 				46E262AB249FA596005F70A4 /* AppDelegate.swift in Sources */,
@@ -356,6 +391,7 @@
 				4685213224A08C40006B9656 /* CategoryFilterDrinks.swift in Sources */,
 				46E262CD249FD6D6005F70A4 /* Drink.swift in Sources */,
 				46E262CB249FD6B7005F70A4 /* CategoryResponse.swift in Sources */,
+				46B28B2F24C47D590087F03D /* HomeHeaderCollectionViewCell.swift in Sources */,
 				4685212824A08575006B9656 /* DrinkCollectionViewController.swift in Sources */,
 				46E262C2249FC8EF005F70A4 /* GenericNetwork.swift in Sources */,
 				46E262C4249FD009005F70A4 /* GenericNetworkProtocol.swift in Sources */,
