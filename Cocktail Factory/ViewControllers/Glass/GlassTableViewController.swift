@@ -7,25 +7,54 @@
 //
 
 import UIKit
+import CoreData
 
-class GlassTableViewController: UITableViewController {
-
+class GlassTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+    
+    var dataController:DataController!
+    
+    var glassList: [GlassList]?
+    
     enum Section {
         case main
     }
     
-    typealias DataSource = UITableViewDiffableDataSource<Section, Glass>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Glass>
+    typealias DataSource = UITableViewDiffableDataSource<Section, GlassList>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, GlassList>
     private var dataSource: DataSource!
     
+    
+    fileprivate func setUpTableView() {
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "glassCell")
+        self.tableView.tableFooterView = UIView()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Glass"
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "glassCell")
-        self.tableView.tableFooterView = UIView()
+        self.setUpTableView()
         self.setUpDataSource()
-        self.getGlassData()
+        self.setUpFetchedResult()
+        if self.glassList?.count == 0 {
+            self.getGlassData()
+        }else {
+            self.setGlassData(with: self.glassList!, animated: false)
+        }
+        
+    }
+    
+    private func setUpFetchedResult() {
+        let fetchRequest:NSFetchRequest<GlassList> = GlassList.fetchRequest()
+        
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        if let result = try? dataController.viewContext.fetch(fetchRequest) {
+            print(result.count)
+            self.glassList = result
+        }else {
+            print("in else result")
+        }
     }
     
     func getGlassData() {
@@ -38,7 +67,14 @@ class GlassTableViewController: UITableViewController {
     private func handleGlassResponse(response: GlassResponse?, error: Error?) {
         self.hideLoading()
         if error == nil {
-            self.setGlassData(with: response?.drinks ?? [])
+            for i in response?.drinks ?? [] {
+                let glass = GlassList(context: dataController.viewContext)
+                glass.name = i.strGlass
+                try? dataController.viewContext.save()
+            }
+            self.setUpFetchedResult()
+            self.setGlassData(with: self.glassList!)
+
         }else {
             //Display Error
             
@@ -49,16 +85,16 @@ class GlassTableViewController: UITableViewController {
         dataSource = UITableViewDiffableDataSource(tableView: self.tableView, cellProvider: { (tableView, indexPath, category) -> UITableViewCell? in
             let categoryCell = tableView.dequeueReusableCell(withIdentifier: "glassCell", for: indexPath)
             categoryCell.accessoryType = .disclosureIndicator
-            categoryCell.textLabel?.text = category.strGlass
+            categoryCell.textLabel?.text = category.name
             return categoryCell
         })
     }
 
-    private func setGlassData(with glass: [Glass]) {
+    private func setGlassData(with glass: [GlassList], animated: Bool = true) {
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
         snapshot.appendItems(glass, toSection: .main)
-        dataSource.apply(snapshot, animatingDifferences: true)
+        dataSource.apply(snapshot, animatingDifferences: animated)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -67,10 +103,15 @@ class GlassTableViewController: UITableViewController {
         guard let drink = dataSource.itemIdentifier(for: indexPath) else {
           return
         }
-        guard let glassName = drink.strGlass else {
+        guard let glassName = drink.name else {
           return
         }
         drinkCollectionVC.glassName = glassName
         self.navigationController?.pushViewController(drinkCollectionVC, animated: true)
     }
 }
+
+
+    
+   
+

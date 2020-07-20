@@ -42,9 +42,6 @@ class CategoryTableViewController: UITableViewController, NSFetchedResultsContro
         }
     }
     
-    
-    
-    
     private func setUpFetchedResult() {
         let fetchRequest:NSFetchRequest<CategoryList> = CategoryList.fetchRequest()
         
@@ -55,8 +52,6 @@ class CategoryTableViewController: UITableViewController, NSFetchedResultsContro
             self.categoryList = result
         }
     }
-    
-    
     
     func getCategoryData(displayLoading: Bool = true) {
         if LocalReachability.isConnectedToNetwork() {
@@ -72,7 +67,6 @@ class CategoryTableViewController: UITableViewController, NSFetchedResultsContro
     
     private func handleCategoryResponse(response: CategoryResponse?, error: Error?) {
         self.hideLoading()
-        self.refreshControl?.endRefreshing()
         if error == nil {
             for i in response?.drinks ?? [] {
                 let category = CategoryList(context: dataController.viewContext)

@@ -29,8 +29,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let categoryNavigationContorller = mainTabBarController.viewControllers?[1] as? UINavigationController
         let categoryViewController = categoryNavigationContorller?.topViewController as! CategoryTableViewController
         
+        let glassNavigationContorller = mainTabBarController.viewControllers?[2] as? UINavigationController
+        let glassViewController = glassNavigationContorller?.topViewController as! GlassTableViewController
+        
         homeViewController.dataController = dataController
         categoryViewController.dataController = dataController
+        glassViewController.dataController = dataController
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
