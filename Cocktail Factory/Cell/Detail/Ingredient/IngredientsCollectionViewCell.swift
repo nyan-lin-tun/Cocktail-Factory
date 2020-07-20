@@ -29,7 +29,12 @@ class IngredientsCollectionViewCell: UICollectionViewCell {
         let ingredientList = self.setUpIngredients(data: data)
         let measurementList = self.setUpMeasure(data: data)
         for (index, ingredient) in ingredientList.enumerated() {
-            ingredients = ingredients + "\(ingredient) - \(measurementList[index])\n"
+            if ingredientList.count == measurementList?.count {
+                ingredients = ingredients + "\(ingredient) - \(measurementList?[index] ?? "")\n"
+            }else {
+                ingredients = ingredients + "\(ingredient)\n"
+            }
+            
         }
         self.ingredientsText.text = ingredients
     }
@@ -60,7 +65,7 @@ class IngredientsCollectionViewCell: UICollectionViewCell {
     }
     
     
-    private func setUpMeasure(data: Cocktail) -> [String] {
+    private func setUpMeasure(data: Cocktail) -> [String]? {
         var strMeasure: [String] = []
         let tempMeasure = [data.strMeasure1,
                            data.strMeasure2,

@@ -21,8 +21,18 @@ class DrinkDetailCollectionViewController: UICollectionViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func addRightNavigationButton() {
+        let rightCancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.dismissDetailView(sender:)))
+        self.navigationItem.rightBarButtonItem = rightCancelButton
+    }
+    
+    @objc private func dismissDetailView(sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.addRightNavigationButton()
         self.collectionView.backgroundColor = .white
         self.collectionView.register(cellType: DrinkHeaderCollectionViewCell.self)
         self.collectionView.register(cellType: IngredientsCollectionViewCell.self)
@@ -45,6 +55,7 @@ class DrinkDetailCollectionViewController: UICollectionViewController {
         self.hideLoading()
         if error == nil {
             self.drink = drinkResponse?.drinks?[0]
+            self.title = self.drink?.strDrink
             self.collectionView.reloadData()
         }else {
             
