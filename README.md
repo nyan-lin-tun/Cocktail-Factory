@@ -6,7 +6,7 @@ Image credit goes to <a href="https://www.iconfinder.com/" target="_blank">Iconf
 
 ## Description
 
-A cocktail factory app which provides list of cocktails. Also support filter with category and glass. This app provide the detail instructions and ingredients of each cocktails.
+This projet use the api from https://www.thecocktaildb.com/. A cocktail factory app which provides list of cocktails. Also support filter with category and glass. This app provide the detail instructions and ingredients of each cocktails.
 
 ## Offline support screens
 
