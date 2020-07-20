@@ -23,8 +23,6 @@ class HomeCollectionViewController: UICollectionViewController, NSFetchedResults
         self.collectionView.register(cellType: HomeDrinkCollectionViewCell.self)
     }
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Home"
@@ -63,7 +61,7 @@ class HomeCollectionViewController: UICollectionViewController, NSFetchedResults
             self.displayLoading(onView: self.view)
             NetworkManager.shared().getRandomCocktail(result: self.randomCocktailResponseHandler(drinkResponse:error:))
         }else {
-            
+            self.displayNetworkAlert()
         }
     }
     
@@ -97,11 +95,12 @@ class HomeCollectionViewController: UICollectionViewController, NSFetchedResults
                     self.deleteRandomCocktail()
                     self.saveRandomCocktail(imageData: data, cocktail: cocktailObject, randomCocktail: randomCocktail)
                 }else {
-                    //Error while getting photo image
+                    self.displayAlert(title: "Error while trying to fetch image data", message: nil)
                 }
             }
         }else {
             self.hideLoading()
+            self.displayAlert(title: "Error while trying to get data", message: nil)
         }
     }
     
@@ -149,12 +148,22 @@ class HomeCollectionViewController: UICollectionViewController, NSFetchedResults
             let navigationController = UINavigationController(rootViewController: drinkDetailViewController)
             guard let cocktail = self.cocktail else { return }
             drinkDetailViewController.idDrink = cocktail.drinkId ?? ""
-            self.present(navigationController, animated: true, completion: nil)
+            if LocalReachability.isConnectedToNetwork() {
+                self.present(navigationController, animated: true, completion: nil)
+            }else {
+                self.displayNetworkAlert()
+            }
+            
         }else if indexPath.section == 2 {
             let alcoholListViewController = AlcoholTypeCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout.init())
             let drinkType = ["Alcoholic", "Non_alcoholic", "Optional_alcohol" ]
             alcoholListViewController.alcoholType = drinkType[indexPath.row]
-            self.navigationController?.pushViewController(alcoholListViewController, animated: true)
+            if LocalReachability.isConnectedToNetwork() {
+                self.navigationController?.pushViewController(alcoholListViewController, animated: true)
+            }else {
+                self.displayNetworkAlert()
+            }
+            
             
         }
     }

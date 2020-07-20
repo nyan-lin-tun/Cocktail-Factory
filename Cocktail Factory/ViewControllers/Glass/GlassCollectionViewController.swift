@@ -50,7 +50,7 @@ class GlassCollectionViewController: UICollectionViewController, UICollectionVie
             NetworkManager.shared().getGlassByFilter(glassName: self.glassName,
                                                      result: self.handleGlassDrinksResponse(response:error:))
         }else {
-            
+            self.displayNetworkAlert()
         }
     }
     
@@ -59,8 +59,7 @@ class GlassCollectionViewController: UICollectionViewController, UICollectionVie
         if error == nil {
             self.setGlassFilterData(with: response?.drinks ?? [])
         }else {
-            //Display Error
-            
+            self.displayAlert(title: "Error while trying to get \(self.glassName)", message: nil)
         }
     }
     
@@ -98,7 +97,12 @@ class GlassCollectionViewController: UICollectionViewController, UICollectionVie
         let drinkDetailViewController = DrinkDetailCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout.init())
         let navigationController = UINavigationController(rootViewController: drinkDetailViewController)
         drinkDetailViewController.idDrink = dataSource.itemIdentifier(for: indexPath)?.idDrink ?? ""
-        self.present(navigationController, animated: true, completion: nil)
+        if LocalReachability.isConnectedToNetwork() {
+            self.present(navigationController, animated: true, completion: nil)
+        }else {
+            self.displayNetworkAlert()
+        }
+        
     }
 
 }

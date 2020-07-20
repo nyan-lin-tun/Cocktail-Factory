@@ -48,12 +48,8 @@ class GlassTableViewController: UITableViewController, NSFetchedResultsControlle
         
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
-        
         if let result = try? dataController.viewContext.fetch(fetchRequest) {
-            print(result.count)
             self.glassList = result
-        }else {
-            print("in else result")
         }
     }
     
@@ -61,6 +57,8 @@ class GlassTableViewController: UITableViewController, NSFetchedResultsControlle
         if LocalReachability.isConnectedToNetwork() {
             self.displayLoading(onView: self.view)
             NetworkManager.shared().getGlass(result: self.handleGlassResponse(response:error:))
+        }else {
+            self.displayNetworkAlert()
         }
     }
     
@@ -76,8 +74,7 @@ class GlassTableViewController: UITableViewController, NSFetchedResultsControlle
             self.setGlassData(with: self.glassList!)
 
         }else {
-            //Display Error
-            
+            self.displayAlert(title: "Error while trying get glass data.", message: nil)
         }
     }
     
@@ -107,7 +104,12 @@ class GlassTableViewController: UITableViewController, NSFetchedResultsControlle
           return
         }
         drinkCollectionVC.glassName = glassName
-        self.navigationController?.pushViewController(drinkCollectionVC, animated: true)
+        if LocalReachability.isConnectedToNetwork() {
+            self.navigationController?.pushViewController(drinkCollectionVC, animated: true)
+        }else {
+            self.displayNetworkAlert()
+        }
+        
     }
 }
 

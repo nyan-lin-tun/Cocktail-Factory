@@ -50,7 +50,7 @@ class DrinkCollectionViewController: UICollectionViewController, UICollectionVie
             NetworkManager.shared().getCategoryByFilter(categoryName: self.categoryType,
                                                         result: self.handleCategoryDrinksResponse(response:error:))
         }else {
-            
+            self.displayNetworkAlert()
         }
     }
     
@@ -59,8 +59,7 @@ class DrinkCollectionViewController: UICollectionViewController, UICollectionVie
         if error == nil {
             self.setCategoryFilterData(with: response?.drinks ?? [])
         }else {
-            //Display Error
-            
+            self.displayAlert(title: "Error while trying to get \(self.categoryType) data", message: nil)
         }
     }
     
@@ -94,7 +93,12 @@ class DrinkCollectionViewController: UICollectionViewController, UICollectionVie
         let drinkDetailViewController = DrinkDetailCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout.init())
         let navigationController = UINavigationController(rootViewController: drinkDetailViewController)
         drinkDetailViewController.idDrink = dataSource.itemIdentifier(for: indexPath)?.idDrink ?? ""
-        self.present(navigationController, animated: true, completion: nil)
+        if LocalReachability.isConnectedToNetwork() {
+            self.present(navigationController, animated: true, completion: nil)
+        }else {
+            self.displayNetworkAlert()
+        }
+        
         
     }
 

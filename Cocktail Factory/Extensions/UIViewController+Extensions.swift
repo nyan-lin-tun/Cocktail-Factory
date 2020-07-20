@@ -34,7 +34,16 @@ extension UIViewController {
         }
     }
     
-    func displayAlert(title: String, message: String) {
+    func displayAlert(title: String, message: String?) {
+        DispatchQueue.main.async {
+            self.present(AlertUtil().okAlert(title: title, msg: message), animated: true, completion: nil)
+        }
         
+    }
+    
+    func displayNetworkAlert() {
+        DispatchQueue.main.async {
+            self.present(AlertUtil().getNetworkAlert(), animated: true, completion: nil)
+        }
     }
 }

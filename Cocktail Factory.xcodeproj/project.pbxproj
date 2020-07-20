@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4652410F24C5C4AA0009A40B /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4652410E24C5C4AA0009A40B /* MainTabBarViewController.swift */; };
 		4652411124C5D2F00009A40B /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4652411024C5D2F00009A40B /* CoreDataStack.swift */; };
+		4652411524C5ECF80009A40B /* AlertUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4652411424C5ECF80009A40B /* AlertUtil.swift */; };
 		4685212224A07A79006B9656 /* APIRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4685212124A07A79006B9656 /* APIRoutes.swift */; };
 		4685212524A07BE8006B9656 /* LocalReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4685212424A07BE8006B9656 /* LocalReachability.swift */; };
 		4685212824A08575006B9656 /* DrinkCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4685212724A08575006B9656 /* DrinkCollectionViewController.swift */; };
@@ -56,6 +57,7 @@
 /* Begin PBXFileReference section */
 		4652410E24C5C4AA0009A40B /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		4652411024C5D2F00009A40B /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		4652411424C5ECF80009A40B /* AlertUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertUtil.swift; sourceTree = "<group>"; };
 		4685212124A07A79006B9656 /* APIRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRoutes.swift; sourceTree = "<group>"; };
 		4685212424A07BE8006B9656 /* LocalReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalReachability.swift; sourceTree = "<group>"; };
 		4685212724A08575006B9656 /* DrinkCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkCollectionViewController.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				4685212424A07BE8006B9656 /* LocalReachability.swift */,
+				4652411424C5ECF80009A40B /* AlertUtil.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -490,6 +493,7 @@
 				46B28B4424C59D300087F03D /* IngredientsCollectionViewCell.swift in Sources */,
 				46E262CB249FD6B7005F70A4 /* CategoryResponse.swift in Sources */,
 				46B28B2F24C47D590087F03D /* HomeHeaderCollectionViewCell.swift in Sources */,
+				4652411524C5ECF80009A40B /* AlertUtil.swift in Sources */,
 				46B28B3524C4846D0087F03D /* HomeTitleCollectionViewCell.swift in Sources */,
 				4685212824A08575006B9656 /* DrinkCollectionViewController.swift in Sources */,
 				46F56F1C24C5BC4300F59004 /* DataController.swift in Sources */,

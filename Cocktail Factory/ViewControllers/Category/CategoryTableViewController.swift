@@ -58,10 +58,9 @@ class CategoryTableViewController: UITableViewController, NSFetchedResultsContro
             if displayLoading {
                 self.displayLoading(onView: self.view)
             }
-            print("fetching")
             NetworkManager.shared().getCategory(result: self.handleCategoryResponse(response:error:))
         }else {
-            
+            self.displayNetworkAlert()
         }
     }
     
@@ -76,8 +75,7 @@ class CategoryTableViewController: UITableViewController, NSFetchedResultsContro
             self.setUpFetchedResult()
             self.setCategoryData(with: self.categoryList!)
         }else {
-            //Display Error
-            
+            self.displayAlert(title: "Error while trying to get category data.", message: nil)
         }
     }
     
@@ -107,7 +105,12 @@ class CategoryTableViewController: UITableViewController, NSFetchedResultsContro
           return
         }
         drinkCollectionVC.categoryType = categoryType
-        self.navigationController?.pushViewController(drinkCollectionVC, animated: true)
+        if LocalReachability.isConnectedToNetwork() {
+            self.navigationController?.pushViewController(drinkCollectionVC, animated: true)
+        }else {
+            self.displayNetworkAlert()
+        }
+        
     }
     
 }
