@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4652410F24C5C4AA0009A40B /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4652410E24C5C4AA0009A40B /* MainTabBarViewController.swift */; };
+		4652411124C5D2F00009A40B /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4652411024C5D2F00009A40B /* CoreDataStack.swift */; };
 		4685212224A07A79006B9656 /* APIRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4685212124A07A79006B9656 /* APIRoutes.swift */; };
 		4685212524A07BE8006B9656 /* LocalReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4685212424A07BE8006B9656 /* LocalReachability.swift */; };
 		4685212824A08575006B9656 /* DrinkCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4685212724A08575006B9656 /* DrinkCollectionViewController.swift */; };
@@ -54,6 +55,7 @@
 
 /* Begin PBXFileReference section */
 		4652410E24C5C4AA0009A40B /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
+		4652411024C5D2F00009A40B /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		4685212124A07A79006B9656 /* APIRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRoutes.swift; sourceTree = "<group>"; };
 		4685212424A07BE8006B9656 /* LocalReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalReachability.swift; sourceTree = "<group>"; };
 		4685212724A08575006B9656 /* DrinkCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkCollectionViewController.swift; sourceTree = "<group>"; };
@@ -390,6 +392,7 @@
 			isa = PBXGroup;
 			children = (
 				46F56F1B24C5BC4300F59004 /* DataController.swift */,
+				4652411024C5D2F00009A40B /* CoreDataStack.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -471,6 +474,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4652411124C5D2F00009A40B /* CoreDataStack.swift in Sources */,
 				46E262D0249FD7DB005F70A4 /* NetworkManager.swift in Sources */,
 				4685214124A0BEB4006B9656 /* RandomCocktailResponse.swift in Sources */,
 				4685213624A0AF8A006B9656 /* GlassResponse.swift in Sources */,

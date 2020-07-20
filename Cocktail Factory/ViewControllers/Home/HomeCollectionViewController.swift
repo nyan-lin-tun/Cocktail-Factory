@@ -28,6 +28,7 @@ class HomeCollectionViewController: UICollectionViewController, NSFetchedResults
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Home"
+        self.addRefreshButton()
         registerCells()
         self.setUpFetchedResult()
         if self.cocktail == nil {
@@ -37,8 +38,13 @@ class HomeCollectionViewController: UICollectionViewController, NSFetchedResults
         }
     }
     
-    private func refreshRandomCocktail(sender: UIBarButtonItem) {
+    @objc private func refreshRandomCocktail(sender: UIBarButtonItem) {
         self.getRandomCocktail()
+    }
+    
+    func addRefreshButton() {
+        let rightRefreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(self.refreshRandomCocktail(sender:)))
+        self.navigationItem.rightBarButtonItem = rightRefreshButton
     }
     
     private func setUpFetchedResult() {
@@ -75,12 +81,9 @@ class HomeCollectionViewController: UICollectionViewController, NSFetchedResults
     
     
     private func deleteRandomCocktail() {
-        let randomCocktails = fetchedResultsController.fetchedObjects ?? []
-        for rdmCocktail in randomCocktails {
-            let indexPath = fetchedResultsController.indexPath(forObject: rdmCocktail)!
-            let cocktailToDelete = fetchedResultsController.object(at: indexPath)
-            dataController.viewContext.delete(cocktailToDelete)
-            try? dataController.viewContext.save()
+        if self.cocktail != nil {
+            dataController.viewContext.delete(self.cocktail!)
+            CoreDataStack.saveToCoreData(dataController: self.dataController)
         }
     }
     
