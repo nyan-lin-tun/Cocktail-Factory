@@ -41,7 +41,7 @@ class GlassTableViewController: UITableViewController {
             self.setGlassData(with: response?.drinks ?? [])
         }else {
             //Display Error
-            print(error?.localizedDescription)
+            
         }
     }
     

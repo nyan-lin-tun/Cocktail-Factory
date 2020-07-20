@@ -60,7 +60,7 @@ class DrinkCollectionViewController: UICollectionViewController, UICollectionVie
             self.setCategoryFilterData(with: response?.drinks ?? [])
         }else {
             //Display Error
-            print(error?.localizedDescription)
+            
         }
     }
     

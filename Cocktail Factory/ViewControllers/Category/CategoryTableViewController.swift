@@ -43,7 +43,7 @@ class CategoryTableViewController: UITableViewController {
             self.setCategoryData(with: response?.drinks ?? [])
         }else {
             //Display Error
-            print(error?.localizedDescription)
+            
         }
     }
     

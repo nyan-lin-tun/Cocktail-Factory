@@ -25,6 +25,8 @@ class DrinkDetailCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         self.collectionView.backgroundColor = .white
         self.collectionView.register(cellType: DrinkHeaderCollectionViewCell.self)
+        self.collectionView.register(cellType: IngredientsCollectionViewCell.self)
+        
         self.getDrinkDetail()
     }
 
@@ -57,38 +59,52 @@ class DrinkDetailCollectionViewController: UICollectionViewController {
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return 2
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let drinkHeaderCell = collectionView.dequeueReusableCell(with: DrinkHeaderCollectionViewCell.self, for: indexPath)
-        
-        drinkHeaderCell.drinkImage.image = UIImage(named: "glass")
-        if let drink = self.drink {
-            drinkHeaderCell.setDrinkHeaderData(data: drink)
-            if let imageUrl = drink.strDrinkThumb {
-                GenericNetwork.shared().getPhotoData(imageUrl: imageUrl) { (data, error) in
-                    guard let data = data else {
-                        return
+        if indexPath.row == 0 {
+            let drinkHeaderCell = collectionView.dequeueReusableCell(with: DrinkHeaderCollectionViewCell.self, for: indexPath)
+            drinkHeaderCell.drinkImage.image = UIImage(named: "glass")
+            if let drink = self.drink {
+                drinkHeaderCell.setDrinkHeaderData(data: drink)
+                if let imageUrl = drink.strDrinkThumb {
+                    GenericNetwork.shared().getPhotoData(imageUrl: imageUrl) { (data, error) in
+                        guard let data = data else {
+                            return
+                        }
+                        let image = UIImage(data: data)
+                        drinkHeaderCell.drinkImage.image = image
+                        drinkHeaderCell.setNeedsLayout()
                     }
-                    let image = UIImage(data: data)
-                    drinkHeaderCell.drinkImage.image = image
-                    drinkHeaderCell.setNeedsLayout()
                 }
             }
+            return drinkHeaderCell
+        }else {
+            let descriptionCell = collectionView.dequeueReusableCell(with: IngredientsCollectionViewCell.self, for: indexPath)
+                if let drink = self.drink {
+                    descriptionCell.setDrinkDescription(data: drink)
+                }
+            return descriptionCell
         }
         
-        return drinkHeaderCell
     }
 }
 
 extension DrinkDetailCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
-        let totalSpace = flowLayout.sectionInset.left
-            + flowLayout.sectionInset.right
-            + flowLayout.minimumInteritemSpacing
-        let size = Int((collectionView.bounds.width - totalSpace))
-        return CGSize(width: size, height: 140)
+        if indexPath.row == 0 {
+            return CGSize(width: collectionView.bounds.width, height: 140)
+        }else {
+            guard let ingredientsCell: IngredientsCollectionViewCell = Bundle.main.loadNibNamed("IngredientsCollectionViewCell",
+                                                                          owner: self,
+                                                                          options: nil)?.first as? IngredientsCollectionViewCell else {
+                return CGSize.zero
+            }
+            ingredientsCell.setNeedsLayout()
+            ingredientsCell.layoutIfNeeded()
+            return CGSize(width: collectionView.bounds.width, height: 500)
+        }
+
     }
 }

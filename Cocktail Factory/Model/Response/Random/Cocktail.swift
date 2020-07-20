@@ -34,8 +34,6 @@ struct Cocktail : Codable {
     let strIngredient14: String?
     let strIngredient15: String?
     
-    var ingredients: [String]?
-    
     let strMeasure1: String?
     let strMeasure2: String?
     let strMeasure3: String?
@@ -51,9 +49,6 @@ struct Cocktail : Codable {
     let strMeasure13: String?
     let strMeasure14: String?
     let strMeasure15: String?
-    
-    var strMeasure: [String]?
-    
     
     enum CodingKeys: String, CodingKey {
         case idDrink = "idDrink"
@@ -98,8 +93,6 @@ struct Cocktail : Codable {
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-//        drinks = try values.decodeIfPresent([Glass].self, forKey: .drinks)
-        
         idDrink = try values.decodeIfPresent(String.self, forKey: .idDrink)
         strDrink = try values.decodeIfPresent(String.self, forKey: .strDrink)
         strCategory = try values.decodeIfPresent(String.self, forKey: .strCategory)
@@ -137,32 +130,9 @@ struct Cocktail : Codable {
         strMeasure13 = try values.decodeIfPresent(String.self, forKey: .strMeasure13)
         strMeasure14 = try values.decodeIfPresent(String.self, forKey: .strMeasure14)
         strMeasure15 = try values.decodeIfPresent(String.self, forKey: .strMeasure15)
-        
-        
     }
     
-    mutating func setUpIngredients() {
-        let tempIngredient = [self.strIngredient1,
-                              self.strIngredient2,
-                              self.strIngredient3,
-                              self.strIngredient4,
-                              self.strIngredient5,
-                              self.strIngredient6,
-                              self.strIngredient7,
-                              self.strIngredient8,
-                              self.strIngredient9,
-                              self.strIngredient10,
-                              self.strIngredient11,
-                              self.strIngredient12,
-                              self.strIngredient13,
-                              self.strIngredient14,
-                              self.strIngredient15]
-        for integrident in tempIngredient {
-            if !(integrident?.isEmpty ?? true) {
-                self.ingredients?.append(integrident ?? "")
-            }
-        }
-    }
+    
     
     
     

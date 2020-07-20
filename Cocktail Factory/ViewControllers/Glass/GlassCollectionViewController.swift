@@ -60,7 +60,7 @@ class GlassCollectionViewController: UICollectionViewController, UICollectionVie
             self.setGlassFilterData(with: response?.drinks ?? [])
         }else {
             //Display Error
-            print(error?.localizedDescription)
+            
         }
     }
     

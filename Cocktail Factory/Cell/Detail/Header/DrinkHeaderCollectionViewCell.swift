@@ -21,6 +21,7 @@ class DrinkHeaderCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         self.drinkName.textColor = UIColor.black
         self.contentView.translatesAutoresizingMaskIntoConstraints = false
+        
     }
     
     func setDrinkHeaderData(data: Cocktail) {
