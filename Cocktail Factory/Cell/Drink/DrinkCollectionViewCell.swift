@@ -16,7 +16,7 @@ class DrinkCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.drinkTitle.textColor = .black
     }
     
 
