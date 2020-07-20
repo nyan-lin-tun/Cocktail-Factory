@@ -7,32 +7,63 @@
 //
 
 import UIKit
+import CoreData
 
-class CategoryTableViewController: UITableViewController {
+class CategoryTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
     var dataController:DataController!
+    
+    var categoryList: [CategoryList]?
     
     enum Section {
         case main
     }
     
-    typealias DataSource = UITableViewDiffableDataSource<Section, Drink>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Drink>
+    typealias DataSource = UITableViewDiffableDataSource<Section, CategoryList>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, CategoryList>
     private var dataSource: DataSource!
     
+    
+    fileprivate func setUpTableView() {
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "categoryCell")
+        self.tableView.tableFooterView = UIView()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Category"
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "categoryCell")
-        self.tableView.tableFooterView = UIView()
+        self.setUpTableView()
         self.setUpDataSource()
-        self.getCategoryData()   
+        self.setUpFetchedResult()
+        if self.categoryList?.count == 0 {
+            self.getCategoryData()
+        }else {
+            self.setCategoryData(with: self.categoryList!, animated: false)
+        }
     }
     
-    func getCategoryData() {
+    
+    
+    
+    private func setUpFetchedResult() {
+        let fetchRequest:NSFetchRequest<CategoryList> = CategoryList.fetchRequest()
+        
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        if let result = try? dataController.viewContext.fetch(fetchRequest) {
+            self.categoryList = result
+        }
+    }
+    
+    
+    
+    func getCategoryData(displayLoading: Bool = true) {
         if LocalReachability.isConnectedToNetwork() {
-            self.displayLoading(onView: self.view)
+            if displayLoading {
+                self.displayLoading(onView: self.view)
+            }
+            print("fetching")
             NetworkManager.shared().getCategory(result: self.handleCategoryResponse(response:error:))
         }else {
             
@@ -41,8 +72,15 @@ class CategoryTableViewController: UITableViewController {
     
     private func handleCategoryResponse(response: CategoryResponse?, error: Error?) {
         self.hideLoading()
+        self.refreshControl?.endRefreshing()
         if error == nil {
-            self.setCategoryData(with: response?.drinks ?? [])
+            for i in response?.drinks ?? [] {
+                let category = CategoryList(context: dataController.viewContext)
+                category.name = i.strCategory
+                try? dataController.viewContext.save()
+            }
+            self.setUpFetchedResult()
+            self.setCategoryData(with: self.categoryList!)
         }else {
             //Display Error
             
@@ -53,16 +91,16 @@ class CategoryTableViewController: UITableViewController {
         dataSource = UITableViewDiffableDataSource(tableView: self.tableView, cellProvider: { (tableView, indexPath, category) -> UITableViewCell? in
             let categoryCell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath)
             categoryCell.accessoryType = .disclosureIndicator
-            categoryCell.textLabel?.text = category.strCategory
+            categoryCell.textLabel?.text = category.name
             return categoryCell
         })
     }
 
-    private func setCategoryData(with category: [Drink]) {
+    private func setCategoryData(with category: [CategoryList], animated: Bool = true) {
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
         snapshot.appendItems(category, toSection: .main)
-        dataSource.apply(snapshot, animatingDifferences: true)
+        dataSource.apply(snapshot, animatingDifferences: animated)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -71,7 +109,7 @@ class CategoryTableViewController: UITableViewController {
         guard let drink = dataSource.itemIdentifier(for: indexPath) else {
           return
         }
-        guard let categoryType = drink.strCategory else {
+        guard let categoryType = drink.name else {
           return
         }
         drinkCollectionVC.categoryType = categoryType
