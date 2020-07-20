@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4652410F24C5C4AA0009A40B /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4652410E24C5C4AA0009A40B /* MainTabBarViewController.swift */; };
 		4685212224A07A79006B9656 /* APIRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4685212124A07A79006B9656 /* APIRoutes.swift */; };
 		4685212524A07BE8006B9656 /* LocalReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4685212424A07BE8006B9656 /* LocalReachability.swift */; };
 		4685212824A08575006B9656 /* DrinkCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4685212724A08575006B9656 /* DrinkCollectionViewController.swift */; };
@@ -47,9 +48,12 @@
 		46E262CD249FD6D6005F70A4 /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E262CC249FD6D6005F70A4 /* Drink.swift */; };
 		46E262D0249FD7DB005F70A4 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E262CF249FD7DB005F70A4 /* NetworkManager.swift */; };
 		46E262D3249FD87E005F70A4 /* NetworkManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E262D2249FD87E005F70A4 /* NetworkManagerProtocol.swift */; };
+		46F56F1924C5B10F00F59004 /* CocktailFactory.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 46F56F1724C5B10F00F59004 /* CocktailFactory.xcdatamodeld */; };
+		46F56F1C24C5BC4300F59004 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F56F1B24C5BC4300F59004 /* DataController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4652410E24C5C4AA0009A40B /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		4685212124A07A79006B9656 /* APIRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRoutes.swift; sourceTree = "<group>"; };
 		4685212424A07BE8006B9656 /* LocalReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalReachability.swift; sourceTree = "<group>"; };
 		4685212724A08575006B9656 /* DrinkCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkCollectionViewController.swift; sourceTree = "<group>"; };
@@ -92,6 +96,8 @@
 		46E262CC249FD6D6005F70A4 /* Drink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drink.swift; sourceTree = "<group>"; };
 		46E262CF249FD7DB005F70A4 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		46E262D2249FD87E005F70A4 /* NetworkManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerProtocol.swift; sourceTree = "<group>"; };
+		46F56F1824C5B10F00F59004 /* CocktailFactory.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CocktailFactory.xcdatamodel; sourceTree = "<group>"; };
+		46F56F1B24C5BC4300F59004 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +111,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4652410D24C5C4980009A40B /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				4652410E24C5C4AA0009A40B /* MainTabBarViewController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
 		4685212324A07BBF006B9656 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -290,6 +304,7 @@
 				46E262B3249FA598005F70A4 /* Assets.xcassets */,
 				46E262B5249FA598005F70A4 /* LaunchScreen.storyboard */,
 				46E262B8249FA598005F70A4 /* Info.plist */,
+				46F56F1724C5B10F00F59004 /* CocktailFactory.xcdatamodeld */,
 			);
 			path = "Cocktail Factory";
 			sourceTree = "<group>";
@@ -307,6 +322,7 @@
 		46E262BF249FBEB9005F70A4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				46F56F1A24C5BC2F00F59004 /* CoreData */,
 				46E262C9249FD6AB005F70A4 /* Response */,
 				46E262C8249FD6A5005F70A4 /* Request */,
 			);
@@ -316,6 +332,7 @@
 		46E262C0249FBEBF005F70A4 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				4652410D24C5C4980009A40B /* TabBar */,
 				46B28B2824C47D1A0087F03D /* Home */,
 				4685213324A0AF72006B9656 /* Glass */,
 				4685212624A0853D006B9656 /* Category */,
@@ -367,6 +384,14 @@
 				46E262D2249FD87E005F70A4 /* NetworkManagerProtocol.swift */,
 			);
 			path = NetworkManager;
+			sourceTree = "<group>";
+		};
+		46F56F1A24C5BC2F00F59004 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				46F56F1B24C5BC4300F59004 /* DataController.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -449,6 +474,7 @@
 				46E262D0249FD7DB005F70A4 /* NetworkManager.swift in Sources */,
 				4685214124A0BEB4006B9656 /* RandomCocktailResponse.swift in Sources */,
 				4685213624A0AF8A006B9656 /* GlassResponse.swift in Sources */,
+				4652410F24C5C4AA0009A40B /* MainTabBarViewController.swift in Sources */,
 				46B28B2A24C47D290087F03D /* HomeCollectionViewController.swift in Sources */,
 				4685213A24A0B130006B9656 /* GlassTableViewController.swift in Sources */,
 				4685212224A07A79006B9656 /* APIRoutes.swift in Sources */,
@@ -462,12 +488,14 @@
 				46B28B2F24C47D590087F03D /* HomeHeaderCollectionViewCell.swift in Sources */,
 				46B28B3524C4846D0087F03D /* HomeTitleCollectionViewCell.swift in Sources */,
 				4685212824A08575006B9656 /* DrinkCollectionViewController.swift in Sources */,
+				46F56F1C24C5BC4300F59004 /* DataController.swift in Sources */,
 				46E262C2249FC8EF005F70A4 /* GenericNetwork.swift in Sources */,
 				46B28B3D24C48C3D0087F03D /* AlcoholTypeCollectionViewController.swift in Sources */,
 				46E262C4249FD009005F70A4 /* GenericNetworkProtocol.swift in Sources */,
 				4685212C24A08746006B9656 /* DrinkCollectionViewCell.swift in Sources */,
 				46E262AD249FA596005F70A4 /* SceneDelegate.swift in Sources */,
 				4685214324A0BEC5006B9656 /* Cocktail.swift in Sources */,
+				46F56F1924C5B10F00F59004 /* CocktailFactory.xcdatamodeld in Sources */,
 				4685213024A08C37006B9656 /* CategoryFilterResponse.swift in Sources */,
 				46B28B3F24C49B7E0087F03D /* UIViewController+Extensions.swift in Sources */,
 				4685213824A0AFC5006B9656 /* Glass.swift in Sources */,
@@ -674,6 +702,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		46F56F1724C5B10F00F59004 /* CocktailFactory.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				46F56F1824C5B10F00F59004 /* CocktailFactory.xcdatamodel */,
+			);
+			currentVersion = 46F56F1824C5B10F00F59004 /* CocktailFactory.xcdatamodel */;
+			path = CocktailFactory.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 46E2629F249FA596005F70A4 /* Project object */;
 }

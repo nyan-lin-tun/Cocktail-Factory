@@ -30,9 +30,10 @@ class HomeHeaderCollectionViewCell: UICollectionViewCell {
         self.cocktailImage.layer.cornerRadius = 10
     }
     
-    func setDrinkHeaderData(data: Cocktail) {
-        self.cocktailName.text = data.strDrink
-        self.cocktailType.text = "\(data.strCategory ?? "") | \(data.strAlcoholic ?? "") | \(data.strGlass ?? "")"
+    func setDrinkHeaderData(data: RandomCocktail) {
+        self.cocktailName.text = data.name
+        self.cocktailType.text = data.drinkType
+        self.cocktailImage.image = UIImage(data: data.image!)
     }
 
 }

@@ -32,10 +32,10 @@
             </objects>
             <point key="canvasLocation" x="1637.68115942029" y="-1180.5803571428571"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Main Tab Bar View Controller-->
         <scene sceneID="UgI-0a-y4r">
             <objects>
-                <tabBarController id="Cby-K4-fja" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="MainTabBarViewController" id="Cby-K4-fja" customClass="MainTabBarViewController" customModule="Cocktail_Factory" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="rgz-HM-qml">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>

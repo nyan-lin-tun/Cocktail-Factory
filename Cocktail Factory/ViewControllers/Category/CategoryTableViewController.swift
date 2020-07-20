@@ -10,6 +10,8 @@ import UIKit
 
 class CategoryTableViewController: UITableViewController {
     
+    var dataController:DataController!
+    
     enum Section {
         case main
     }

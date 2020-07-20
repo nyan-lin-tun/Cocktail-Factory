@@ -7,10 +7,15 @@
 //
 
 import UIKit
+import CoreData
 
-class HomeCollectionViewController: UICollectionViewController {
+class HomeCollectionViewController: UICollectionViewController, NSFetchedResultsControllerDelegate {
 
-    var cocktail: Cocktail?
+    var dataController:DataController!
+    
+    var cocktail: RandomCocktail?
+    
+    var fetchedResultsController: NSFetchedResultsController<RandomCocktail>!
     
     fileprivate func registerCells() {
         self.collectionView.register(cellType: HomeHeaderCollectionViewCell.self)
@@ -18,12 +23,33 @@ class HomeCollectionViewController: UICollectionViewController {
         self.collectionView.register(cellType: HomeDrinkCollectionViewCell.self)
     }
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Home"
         registerCells()
+        self.setUpFetchedResult()
+        if self.cocktail == nil {
+            self.getRandomCocktail()
+        }else {
+            self.collectionView.reloadData()
+        }
+    }
+    
+    private func refreshRandomCocktail(sender: UIBarButtonItem) {
         self.getRandomCocktail()
+    }
+    
+    private func setUpFetchedResult() {
+        let fetchRequest:NSFetchRequest<RandomCocktail> = RandomCocktail.fetchRequest()
         
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        if let result = try? dataController.viewContext.fetch(fetchRequest) {
+            self.cocktail = result.first
+        }
     }
     
     private func getRandomCocktail() {
@@ -35,16 +61,48 @@ class HomeCollectionViewController: UICollectionViewController {
         }
     }
     
-    
-    private func randomCocktailResponseHandler(drinkResponse: RandomCocktailResponse?, error: Error?) {
+    private func saveRandomCocktail(imageData: Data?, cocktail: Cocktail?, randomCocktail: RandomCocktail) {
+        
+        randomCocktail.drinkId = cocktail?.idDrink
+        randomCocktail.name = cocktail?.strDrink
+        randomCocktail.image = imageData
+        randomCocktail.drinkType = "\(cocktail?.strCategory ?? "") | \(cocktail?.strAlcoholic ?? "") | \(cocktail?.strGlass ?? "")"
+        try? dataController.viewContext.save()
+        self.setUpFetchedResult()
         self.hideLoading()
-        if error == nil {
-            self.cocktail = drinkResponse?.drinks?[0]
-            self.collectionView.reloadData()
-        }else {
-            
+        self.collectionView.reloadData()
+    }
+    
+    
+    private func deleteRandomCocktail() {
+        let randomCocktails = fetchedResultsController.fetchedObjects ?? []
+        for rdmCocktail in randomCocktails {
+            let indexPath = fetchedResultsController.indexPath(forObject: rdmCocktail)!
+            let cocktailToDelete = fetchedResultsController.object(at: indexPath)
+            dataController.viewContext.delete(cocktailToDelete)
+            try? dataController.viewContext.save()
         }
     }
+    
+    private func randomCocktailResponseHandler(drinkResponse: RandomCocktailResponse?, error: Error?) {
+        if error == nil {
+            let randomCocktail = RandomCocktail(context: dataController.viewContext)
+            let cocktailObject = drinkResponse?.drinks?[0]
+            
+            GenericNetwork.shared().getPhotoData(imageUrl: (cocktailObject?.strDrinkThumb!)!) { (data, error) in
+                if error == nil {
+                    self.deleteRandomCocktail()
+                    self.saveRandomCocktail(imageData: data, cocktail: cocktailObject, randomCocktail: randomCocktail)
+                }else {
+                    //Error while getting photo image
+                }
+            }
+        }else {
+            self.hideLoading()
+        }
+    }
+    
+    
 
     // MARK: UICollectionViewDataSource
 
@@ -69,16 +127,6 @@ class HomeCollectionViewController: UICollectionViewController {
             headerCell.cocktailImage.image = UIImage(named: "glass")
             if let cocktail = self.cocktail {
                 headerCell.setDrinkHeaderData(data: cocktail)
-                if let imageUrl = cocktail.strDrinkThumb {
-                    GenericNetwork.shared().getPhotoData(imageUrl: imageUrl) { (data, error) in
-                        guard let data = data else {
-                            return
-                        }
-                        let image = UIImage(data: data)
-                        headerCell.cocktailImage.image = image
-                        headerCell.setNeedsLayout()
-                    }
-                }
             }
             return headerCell
         }else if indexPath.section == 1{
@@ -96,7 +144,8 @@ class HomeCollectionViewController: UICollectionViewController {
         if indexPath.section == 0 {
             let drinkDetailViewController = DrinkDetailCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout.init())
             let navigationController = UINavigationController(rootViewController: drinkDetailViewController)
-            drinkDetailViewController.idDrink = self.cocktail?.idDrink ?? ""
+            guard let cocktail = self.cocktail else { return }
+            drinkDetailViewController.idDrink = cocktail.drinkId ?? ""
             self.present(navigationController, animated: true, completion: nil)
         }else if indexPath.section == 2 {
             let alcoholListViewController = AlcoholTypeCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout.init())
@@ -118,8 +167,5 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
         }else{
             return CGSize(width: collectionView.frame.width - 20, height: 50)
         }
-        
-        
-        
     }
 }
